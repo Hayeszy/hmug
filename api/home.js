@@ -1,13 +1,8 @@
-import fly from '../utils/request.js'
-// console.log(fly.get('/home/swiperdata'))
-export function getBanners() {
-  return fly.get('/home/swiperdata')
-}
+import fly from '@/utils/request.js'
 
-export function getNavs() {
-  return fly.get('/home/catitems')
-}
-
-export function getFloorList() {
-  return fly.get('/home/floordata')
-}
+// 获取首页轮播图
+export const getBanners = () => fly.get('/home/swiperdata')
+// 获取首页导航数据
+export const getNavs = () => fly.get('/home/catitems')
+// 获取楼层数据
+export const getFloors = () => fly.get('/home/floordata')

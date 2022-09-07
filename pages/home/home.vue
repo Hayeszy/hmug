@@ -19,11 +19,12 @@
 
     <!-- 分类导航区域 -->
     <view class="nav-list">
-      <view class="nav-item" v-for="(item, i) in navs" :key="i" @click="clickNav(item)">
+      <view @click="clickNav(item)" class="nav-item" v-for="(item, i) in navs" :key="i">
         <image :src="item.image_src" class="nav-img"></image>
       </view>
     </view>
 
+    <!-- 楼层区域 -->
     <!-- 楼层区域 -->
     <view class="floor-list">
       <!-- 楼层 item 项 -->
@@ -34,13 +35,16 @@
         <view class="floor-img-box">
           <!-- 左侧大图片的盒子 -->
           <view class="left-img-box">
-            <image class="left-img" :src="item.product_list[0].image_src"
-              :style="{width: item.product_list[0].image_width + 'rpx'}"></image>
+            <image @click="goGoodsList(item.product_list[0].navigator_url)"
+              :style="{width: item.product_list[0].image_width + 'rpx'}" :src="item.product_list[0].image_src"
+              class="left-img">
+            </image>
           </view>
           <!-- 右侧 4 个小图片的盒子 -->
           <view class="right-img-box">
-            <view class="right-img-item" v-for="(item2, i2) in item.product_list" :key="i2" v-if="i2 !== 0">
-              <image :src="item2.image_src" mode="widthFix" :style="{width: item2.image_width + 'rpx'}"></image>
+            <view v-for="(item2, i) in item.product_list" v-if="i !== 0" :key="i" class="right-img-item">
+              <image @click="goGoodsList(item2.navigator_url)" class="image" :style="{width: item2.image_width + 'rpx'}"
+                :src="item2.image_src"></image>
             </view>
           </view>
         </view>
@@ -53,8 +57,8 @@
   import {
     getBanners,
     getNavs,
-    getFloorList
-  } from '../../api/home.js'
+    getFloors
+  } from '@/api/home.js'
   export default {
     data() {
       return {
@@ -64,24 +68,30 @@
       };
     },
     methods: {
-      // 加载轮播图数据
+      // 加载首页轮播图
       async loadBanners() {
         const res = await getBanners()
-        console.log(res)
         this.banners = res
       },
-      // 加载导航列表数据
+      // 加载导航分类
       async loadNavs() {
         const res = await getNavs()
-        console.log(res)
         this.navs = res
       },
-      async getFloorList() {
-        this.floors = await getFloorList()
+      // 加载楼层
+      async loadFloors() {
+        const res = await getFloors()
+        this.floors = res
       },
       goGoodsDetail(id) {
         uni.navigateTo({
-          url: '/subpkg/goods_detail/goods_detail?goods_id' + id
+          url: "/subpkg/goods_detail/goods_detail?id=" + id
+        })
+      },
+      // 点击进入商品列表
+      goGoodsList(url) {
+        uni.navigateTo({
+          url: '/subpkg/goods_list/goods_list?' + url.split('?')[1]
         })
       },
       clickNav(item) {
@@ -95,7 +105,7 @@
     onLoad() {
       this.loadBanners()
       this.loadNavs()
-      this.getFloorList()
+      this.loadFloors()
     }
   }
 </script>
@@ -103,7 +113,7 @@
 <style lang="scss">
   .topSearch {
     width: 750rpx;
-    height: 70px;
+    height: 100px;
     background-color: #c00000;
     display: flex;
     justify-content: center;
@@ -112,7 +122,7 @@
     .search_btn {
       width: 400rpx;
       height: 30px;
-      margin-top: 30px;
+      margin-top: 50px;
       background-color: #fff;
       border-radius: 10px;
       display: flex;
@@ -152,6 +162,10 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
+
+    .image {
+      height: 193rpx;
+    }
   }
 
   .floor-img-box {
