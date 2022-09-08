@@ -1,5 +1,5 @@
 <template>
-  <view>
+  <view class="goods_detail">
     <!-- 详情页轮播图 -->
     <swiper indicator-dots circular>
       <swiper-item v-for="(item, i) in goods_info.pics">
@@ -28,6 +28,15 @@
     <!-- 商品介绍 -->
     <!-- <view v-html="goods_info.goods_introduce"></view> -->
     <rich-text :nodes="goods_info.goods_introduce"></rich-text>
+    <!-- 商品导航 -->
+    <!-- <uni-goods-nav :fill="true" :options="options" :buttonGroup="buttonGroup" /> -->
+    <van-goods-action>
+      <van-goods-action-icon icon="chat-o" text="客服" />
+      <van-goods-action-icon url="/pages/cart/cart" link-type="switchTab" icon="cart-o" text="购物车" info="5" />
+      <van-goods-action-icon icon="shop-o" text="店铺" />
+      <van-goods-action-button text="加入购物车" type="warning" />
+      <van-goods-action-button text="立即购买" />
+    </van-goods-action>
   </view>
 </template>
 
@@ -38,7 +47,32 @@
   export default {
     data() {
       return {
-        goods_info: {}
+        goods_info: {},
+        options: [{
+          icon: 'headphones',
+          text: '客服'
+        }, {
+          icon: 'shop',
+          text: '店铺',
+          // info: 2,
+          // infoBackgroundColor:'#007aff',
+          // infoColor:"red"
+        }, {
+          icon: 'cart',
+          text: '购物车',
+          info: 2
+        }],
+        buttonGroup: [{
+            text: '加入购物车',
+            backgroundColor: '#ff0000',
+            color: '#fff'
+          },
+          {
+            text: '立即购买',
+            backgroundColor: '#ffa200',
+            color: '#fff'
+          }
+        ]
       };
     },
     methods: {
@@ -65,6 +99,10 @@
 </script>
 
 <style lang="scss">
+  .goods_detail {
+    padding-bottom: 50px;
+  }
+
   swiper {
     height: 750rpx;
 
