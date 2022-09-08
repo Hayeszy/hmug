@@ -78,7 +78,10 @@
     "backgroundColor": "#F8F8F8",
     "usingComponents": {
       "van-button": "/wxcomponents/vant/button/index",
-      "van-card": "/wxcomponents/vant/card/index"
+      "van-card": "/wxcomponents/vant/card/index",
+      "van-goods-action": "/wxcomponents/vant/goods-action/index",
+      "van-goods-action-icon": "/wxcomponents/vant/goods-action-icon/index",
+      "van-goods-action-button": "/wxcomponents/vant/goods-action-button/index"
     },
     "ignoreDevUnusedFiles": false
   },
